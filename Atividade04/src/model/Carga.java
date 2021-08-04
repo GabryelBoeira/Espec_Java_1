@@ -13,7 +13,7 @@ import java.math.RoundingMode;
  * Created by: Gabryel J. Boeira
  */
 
-public class Carga extends Veiculo {
+public class Carga extends Veiculo implements Calc {
 
 	private int tara;
 	private int cargaMax;
@@ -50,17 +50,33 @@ public class Carga extends Veiculo {
 	}
 
 	@Override
-	public double calcVelocMax(int velocMax) {
+	public int calcular() {
+		
+		return this.tara + this.cargaMax + getVelocMax() + getQtdeRodas() + getMotor().getPotencia() + getMotor().getQtdPist();
+	}
 
-		// Velocidade convertida de KM/H para M/H
-		BigDecimal bd = new BigDecimal(velocMax / 3.6).setScale(2, RoundingMode.HALF_EVEN);
-
-		return bd.doubleValue();
+	@Override
+	public int calcVelocMax(int velocMax) {
+		return velocMax * 1000;
 	}
 
 	@Override
 	public String toString() {
-		return " Carga : [ "+ super.toString() + ", tara= " + tara + ", cargaMax= " + cargaMax + " ]";
+		
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append("\nPlaca = " + getPlaca());
+		builder.append("\nMarca = " + getMarca());
+		builder.append("\nModelo = " + getModelo());
+		builder.append("\nVelocidade Maxima = "+ getVelocMax());
+		builder.append("\nCor = " + getCor());
+		builder.append("\nQtde de Rodas = " + getQtdeRodas());
+		builder.append("\nQtde de Pistao = " + getMotor().getQtdPist());
+		builder.append("\nPotencia = " + getMotor().getPotencia());
+		builder.append("\nCarga Maxima = " + getCargaMax());
+		builder.append("\nTara = " + getTara());
+		
+		return builder.toString();
 	}
 
 }

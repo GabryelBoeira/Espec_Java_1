@@ -94,11 +94,6 @@ public abstract class Veiculo {
 		this.motor = motor;
 	}
 
-	abstract double calcVelocMax(int velocMax);
+	abstract int calcVelocMax(int velocMax);
 
-	@Override
-	public String toString() {
-		return "placa = " + placa + ", marca = " + marca + ", modelo = " + modelo + ", velocMax = " + velocMax +  ", cor = " + cor + ", qtde de rodas = " + qtdeRodas +" \n"
-				+ motor.toString();
-	}
 }
