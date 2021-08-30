@@ -54,7 +54,7 @@ public class Carga extends Veiculo {
 		//Velocidade convertida de km/h para m/h 
 		BigDecimal bd = new BigDecimal(velocMax * 0.6214).setScale(2, RoundingMode.HALF_EVEN);
 
-		return bd.doubleValue();
+		return velocMax;
 		
 	}
 
