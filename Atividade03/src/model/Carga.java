@@ -1,7 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /*
  * Classname: Veiculo
@@ -50,12 +48,8 @@ public class Carga extends Veiculo {
 
 	@Override
 	public double calcVelocMax(int velocMax) {
-		
-		//Velocidade convertida de km/h para m/h 
-		BigDecimal bd = new BigDecimal(velocMax * 0.6214).setScale(2, RoundingMode.HALF_EVEN);
 
-		return velocMax;
-		
+		return velocMax * 0.6214;
 	}
 
 	@Override
