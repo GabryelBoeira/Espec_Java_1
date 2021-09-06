@@ -3,6 +3,15 @@ package com.br.gabryel.java1;
 import com.br.gabryel.java1.exception.NumException;
 import com.br.gabryel.java1.model.PessoaJuridica;
 
+/*
+ * Classname: TstConta
+ *
+ * Version information: 1
+ *
+ * Date: 05/09/2021
+ *
+ * Created by: Gabryel J. Boeira
+ */
 public class TstConta {
 
 	public static void main(String[] args) {
