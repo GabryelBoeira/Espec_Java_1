@@ -17,9 +17,9 @@ abstract class Veiculo {
 	private String placa;
 	private String marca;
 	private String modelo;
-	private int velocMax;
+	private Integer velocMax;
 	private String cor;
-	private int qtdeRodas;
+	private Integer qtdeRodas;
 	private Motor motor;
 
 	public Veiculo() {
@@ -32,12 +32,13 @@ abstract class Veiculo {
 		this.motor = new Motor();
 	}
 
-	public Veiculo(String placa, String marca, String modelo, int velocMax, String Cor, int qtdeRodas, int qtdPist,
-			int potencia) {
+	public Veiculo(String placa, String marca, String modelo, Integer velocMax, String Cor, Integer qtdeRodas, Integer qtdPist,
+			Integer potencia) {
 		this.placa = placa;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.velocMax = velocMax;
+		this.qtdeRodas = qtdeRodas;
 		this.motor = new Motor(qtdPist, potencia);
 	}
 
@@ -53,11 +54,11 @@ abstract class Veiculo {
 		this.cor = cor;
 	}
 
-	public int getQtdeRodas() {
+	public Integer getQtdeRodas() {
 		return qtdeRodas;
 	}
 
-	public final void setQtdeRodas(int qtdeRodas) {
+	public final void setQtdeRodas(Integer qtdeRodas) {
 		this.qtdeRodas = qtdeRodas;
 	}
 
@@ -81,11 +82,11 @@ abstract class Veiculo {
 		this.modelo = modelo;
 	}
 
-	public int getVelocMax() {
+	public Integer getVelocMax() {
 		return velocMax;
 	}
 
-	public final void setVelocMax(int velocMax) throws VelocException {
+	public final void setVelocMax(Integer velocMax) throws VelocException {
 
 		if (80 <= velocMax && velocMax <= 110) {
 
@@ -103,6 +104,6 @@ abstract class Veiculo {
 		this.motor = motor;
 	}
 
-	abstract int calcVelocMax(int velocMax);
+	abstract Integer calcVelocMax(Integer velocMax);
 
 }

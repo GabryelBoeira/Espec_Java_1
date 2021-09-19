@@ -12,20 +12,20 @@ package model;
 
 public class Motor {
 
-	private int qtdPist;
-	private int potencia;
+	private Integer qtdPist;
+	private Integer potencia;
 
 	public Motor() {
 		this.qtdPist = 0;
 		this.potencia = 0;
 	}
 
-	public Motor(int qtdPist, int potencia) {
+	public Motor(Integer qtdPist, Integer potencia) {
 		this.qtdPist = qtdPist;
 		this.potencia = potencia;
 	}
 
-	public int getQtdPist() {
+	public Integer getQtdPist() {
 		return qtdPist;
 	}
 
@@ -33,7 +33,7 @@ public class Motor {
 		this.qtdPist = qtdPist;
 	}
 
-	public int getPotencia() {
+	public Integer getPotencia() {
 		return potencia;
 	}
 

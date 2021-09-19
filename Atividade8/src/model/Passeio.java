@@ -12,7 +12,7 @@ package model;
 
 public final class Passeio extends Veiculo implements Calc {
 
-	private int qtdePassageiro;
+	private Integer qtdePassageiro;
 
 	public Passeio() {
 
@@ -20,14 +20,14 @@ public final class Passeio extends Veiculo implements Calc {
 		this.qtdePassageiro = 0;
 	}
 
-	public Passeio(String placa, String marca, String modelo, int velocMax, int qtdPist, String cor, int qtdeRodas,
-			int potencia, int qtdePassageiro) {
+	public Passeio(String placa, String marca, String modelo, Integer velocMax, Integer qtdPist, String cor, Integer qtdeRodas,
+			Integer potencia, Integer qtdePassageiro) {
 
 		super(placa, marca, modelo, velocMax, cor, qtdeRodas, qtdPist, potencia);
 		this.qtdePassageiro = qtdePassageiro;
 	}
-
-	public int getQtdePassageiro() {
+	
+	public Integer getQtdePassageiro() {
 		return qtdePassageiro;
 	}
 	
@@ -55,13 +55,13 @@ public final class Passeio extends Veiculo implements Calc {
 
 	
 	@Override
-	public int calcVelocMax(int velocMax) {
+	public Integer calcVelocMax(Integer velocMax) {
 
 		return velocMax * 10000;
 	}
 
 	@Override
-	public int calcular() {
+	public Integer calcular() {
 		
 		return getPlaca().length() + getMarca().length() + getModelo().length() + getCor().length();
 	}

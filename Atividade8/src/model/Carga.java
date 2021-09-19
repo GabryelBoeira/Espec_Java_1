@@ -12,11 +12,11 @@ package model;
 
 public final class Carga extends Veiculo implements Calc {
 
-	private int tara;
-	private int cargaMax;
+	private Integer tara;
+	private Integer cargaMax;
 
-	public Carga(int tara, int cargaMax, String placa, String marca, String modelo, int velocMax, String cor,
-			int qtdeRodas, int qtdPist, int potencia) {
+	public Carga(Integer tara, Integer cargaMax, String placa, String marca, String modelo, Integer velocMax, String cor,
+			Integer qtdeRodas, Integer qtdPist, Integer potencia) {
 
 		super(placa, marca, modelo, velocMax, cor, qtdeRodas, qtdPist, potencia);
 		this.tara = tara;
@@ -30,7 +30,7 @@ public final class Carga extends Veiculo implements Calc {
 		this.cargaMax = 0;
 	}
 
-	public final int getCargaMax() {
+	public final Integer getCargaMax() {
 		return cargaMax;
 	}
 
@@ -38,22 +38,22 @@ public final class Carga extends Veiculo implements Calc {
 		this.cargaMax = cargaMax;
 	}
 
-	public final int getTara() {
+	public final Integer getTara() {
 		return tara;
 	}
 
-	public final void setTara(int tara) {
+	public final void setTara(Integer tara) {
 		this.tara = tara;
 	}
 
 	@Override
-	public final int calcular() {
+	public final Integer calcular() {
 		
 		return this.tara + this.cargaMax + getVelocMax() + getQtdeRodas() + getMotor().getPotencia() + getMotor().getQtdPist();
 	}
 
 	@Override
-	public final int calcVelocMax(int velocMax) {
+	public final Integer calcVelocMax(Integer velocMax) {
 		return velocMax * 1000;
 	}
 
