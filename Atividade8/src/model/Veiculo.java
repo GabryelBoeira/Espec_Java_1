@@ -32,10 +32,11 @@ abstract class Veiculo {
 		this.motor = new Motor();
 	}
 
-	public Veiculo(String placa, String marca, String modelo, Integer velocMax, String Cor, Integer qtdeRodas, Integer qtdPist,
+	public Veiculo(String placa, String marca, String modelo, Integer velocMax, String cor, Integer qtdeRodas, Integer qtdPist,
 			Integer potencia) {
 		this.placa = placa;
 		this.marca = marca;
+		this.cor = cor;
 		this.modelo = modelo;
 		this.velocMax = velocMax;
 		this.qtdeRodas = qtdeRodas;

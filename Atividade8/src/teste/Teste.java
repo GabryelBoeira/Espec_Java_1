@@ -3,14 +3,10 @@ package teste;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,8 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
 
@@ -29,13 +23,17 @@ import excecao.VeicExistException;
 import excecao.VelocException;
 import model.Carga;
 import model.Passeio;
+import telas.JanelaExibirTodosVeiculosCarga;
+import telas.JanelaExibirTodosVeiculosPasseio;
+import telas.JanelaProcurarVeiculoCarga;
+import telas.JanelaProcurarVeiculoPasseio;
 
 /*
  * Classname: Teste
  *
  * Version information: 1
  *
- * Date: 14/0/2021
+ * Date: 14/09/2021
  *
  * Created by: Gabryel J. Boeira
  */
@@ -56,17 +54,13 @@ public class Teste implements ActionListener {
 	private static JButton btnVeiCargaImprimir = new JButton("Imprimir / Excluir Todos");
 	private static JButton btnVeiCargaSair = new JButton("Voltar");
 
-	private static JFrame janVeiCargaCadastrar = new JFrame("Cadastrar");
-	private static JFrame janVeiCargaProcurar = new JFrame("Consultar / Excluir pela placa");
-
 	private static JButton btnVeiPasseioCadastrar = new JButton("Cadastrar");
 	private static JButton btnVeiPasseioProcurar = new JButton("Consultar / Excluir pela placa");
 	private static JButton btnVeiPasseioImprimir = new JButton("Imprimir / Excluir Todos");
 	private static JButton btnVeiPasseioSair = new JButton("Voltar");
 
+	private static JFrame janVeiCargaCadastrar = new JFrame("Cadastrar");
 	private static JFrame janVeiPasseioCadastrar = new JFrame("Cadastrar");
-	private static JFrame janVeiPasseioProcurar = new JFrame("Consultar / Excluir pela placa");
-	private static JFrame janVeiPasseioImprimir = new JFrame("Imprimir / Excluir Todos");
 
 	private static Passeio resultadoVeiculoPasseio = null;
 	private static Carga resultadoVeiculoCarga = null;
@@ -84,39 +78,19 @@ public class Teste implements ActionListener {
 		jan1.setLayout(new FlowLayout());
 
 		btVeiculoCarga.setBackground(Color.GREEN);
+		btnVeiCargaCadastrar.addActionListener(principal);
+		btnVeiCargaProcurar.addActionListener(principal);
+		btnVeiCargaImprimir.addActionListener(principal);
+		btnVeiCargaSair.addActionListener(principal);
+		
 		btVeiculoCarga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 
 				janCarga.setDefaultCloseOperation(janCarga.DISPOSE_ON_CLOSE);
-				janCarga.setResizable(false);
 				janCarga.setSize(larg, alt);
+				janCarga.setLayout(new GridLayout(4, 1));
+				janCarga.setResizable(false);
 				janCarga.setLocationRelativeTo(null);
-				janCarga.setLayout(new FlowLayout());
-
-				btnVeiCargaCadastrar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-
-						cadastrarVeiculoCarga();
-					}
-				});
-
-				btnVeiCargaProcurar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-
-					}
-				});
-				btnVeiCargaImprimir.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-
-					}
-				});
-
-				btnVeiCargaSair.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						janCarga.dispose();
-
-					}
-				});
 
 				janCarga.add(btnVeiCargaCadastrar);
 				janCarga.add(btnVeiCargaProcurar);
@@ -127,46 +101,59 @@ public class Teste implements ActionListener {
 			}
 		});
 
+		btnVeiPasseioCadastrar.addActionListener(principal);
+		btnVeiPasseioProcurar.addActionListener(principal);
 		btnVeiPasseioImprimir.addActionListener(principal);
+		btnVeiPasseioSair.addActionListener(principal);
 
 		btVeiculoPasseio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 
 				janPasseio.setDefaultCloseOperation(janPasseio.DISPOSE_ON_CLOSE);
-				janPasseio.setResizable(false);
 				janPasseio.setSize(larg, alt);
+				janPasseio.setLayout(new GridLayout(4, 1));
+				janPasseio.setResizable(false);
 				janPasseio.setLocationRelativeTo(null);
-				janPasseio.setVisible(true);
-				janPasseio.setLayout(new FlowLayout());
-
-				btnVeiPasseioCadastrar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-
-						cadastrarVeiculoPasseio();
-					}
-				});
-
-				btnVeiPasseioProcurar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						veiculoPasseioProcurar();
-					}
-				});
-
-				btnVeiPasseioSair.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-
-						janPasseio.dispose();
-					}
-				});
 
 				janPasseio.add(btnVeiPasseioCadastrar);
 				janPasseio.add(btnVeiPasseioProcurar);
 				janPasseio.add(btnVeiPasseioImprimir);
 				janPasseio.add(btnVeiPasseioSair);
+				janPasseio.setVisible(true);
 			}
 		});
 
 		jan1.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent act) {
+
+		if (act.getSource().equals(btnVeiPasseioCadastrar)) {
+
+			cadastrarVeiculoPasseio();
+		} else if (act.getSource().equals(btnVeiPasseioProcurar)) {
+
+			new JanelaProcurarVeiculoPasseio(bdVeiculos);
+		} else if (act.getSource().equals(btnVeiPasseioImprimir)) {
+
+			new JanelaExibirTodosVeiculosPasseio(bdVeiculos);
+		} else if (act.getSource().equals(btnVeiPasseioSair)) {
+
+			janPasseio.dispose();
+		} else if (act.getSource().equals(btnVeiCargaCadastrar)) {
+
+			cadastrarVeiculoCarga();
+		} else if (act.getSource().equals(btnVeiCargaProcurar)) {
+
+			new JanelaProcurarVeiculoCarga(bdVeiculos);
+		} else if (act.getSource().equals(btnVeiCargaImprimir)) {
+
+			new JanelaExibirTodosVeiculosCarga(bdVeiculos);
+		} else if (act.getSource().equals(btnVeiCargaSair)) {
+
+			janCarga.dispose();
+		}
 	}
 
 	public static void cadastrarVeiculoPasseio() {
@@ -324,7 +311,7 @@ public class Teste implements ActionListener {
 			});
 
 			container.add(panelVeic);
-			// janVeiPasseioCadastrar.setContentPane(container);
+
 			janVeiPasseioCadastrar.add(btnCadastrar);
 			janVeiPasseioCadastrar.add(btnLimpar);
 			janVeiPasseioCadastrar.add(btnNovo);
@@ -507,243 +494,6 @@ public class Teste implements ActionListener {
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Informações informadas invalidas", "Erro", JOptionPane.ERROR_MESSAGE);
 			janVeiCargaCadastrar.dispose();
-		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent act) {
-
-		if (act.getSource().equals(btnVeiPasseioImprimir)) {
-
-			new JanelaExibirTodosVeiculosPasseio(bdVeiculos);
-		} else if (act.getSource().equals(btnVeiPasseioImprimir)) {
-
-			new JanelaExibirTodosVeiculosCarga(bdVeiculos);
-		}
-
-	}
-
-	public static void veiculoPasseioProcurar() {
-
-		try {
-			janVeiPasseioProcurar.setContentPane(new Container());
-			janVeiPasseioProcurar.setDefaultCloseOperation(janVeiPasseioCadastrar.DISPOSE_ON_CLOSE);
-			janVeiPasseioProcurar.setResizable(false);
-			janVeiPasseioProcurar.setSize(larg, alt);
-			janVeiPasseioProcurar.setLocationRelativeTo(null);
-			janVeiPasseioProcurar.setLayout(new FlowLayout());
-
-			JButton btnConsultar = new JButton("Consultar");
-			JButton btnExcluir = new JButton("Excluir");
-			JButton btnSair = new JButton("Sair");
-
-			JLabel conPlacaLabel = new JLabel("Informe a placa para consulta: ");
-			JTextField conPlacaValue = new JTextField(10);
-			conPlacaValue.setText("");
-			janVeiPasseioProcurar.add(conPlacaLabel);
-			janVeiPasseioProcurar.add(conPlacaValue);
-
-			btnConsultar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-
-					if (!conPlacaValue.getText().isBlank()) {
-
-						resultadoVeiculoPasseio = bdVeiculos.listarTodosVeiculosPasseio().stream()
-								.filter(i -> i.getPlaca().equals(conPlacaValue.getText())).findFirst().orElse(null);
-
-						if (resultadoVeiculoPasseio != null) {
-
-							String[][] data = { { resultadoVeiculoPasseio.getPlaca(),
-									resultadoVeiculoPasseio.getMarca(), resultadoVeiculoPasseio.getModelo(),
-									resultadoVeiculoPasseio.getVelocMax().toString(), resultadoVeiculoPasseio.getCor(),
-									resultadoVeiculoPasseio.getQtdeRodas().toString(),
-									resultadoVeiculoPasseio.getMotor().getQtdPist().toString(),
-									resultadoVeiculoPasseio.getMotor().getPotencia().toString(),
-									resultadoVeiculoPasseio.getQtdePassageiro().toString() } };
-
-							String[] columnNames = { "Placa", "Marca", "Modelo", "Velocidade Maxima", "Cor",
-									"Qtde de Rodas", "Qtde de Pistao", "Potencia", "Qtde de Passageiros" };
-
-							JTable jTable = new JTable(data, columnNames);
-							JScrollPane sp = new JScrollPane(jTable);
-							janVeiPasseioProcurar.add(sp);
-
-							janVeiPasseioProcurar.revalidate();
-							janVeiPasseioProcurar.repaint();
-							janVeiPasseioProcurar.pack();
-						} else {
-
-							JOptionPane.showMessageDialog(null,
-									"Não a veiculo de passeios com placa" + conPlacaValue.getText(), "Aviso",
-									JOptionPane.WARNING_MESSAGE);
-						}
-					} else {
-
-						JOptionPane.showMessageDialog(null, "Informe uma placa para busca", "Aviso",
-								JOptionPane.WARNING_MESSAGE);
-					}
-				}
-			});
-
-			btnSair.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-
-					janVeiPasseioProcurar.dispose();
-				}
-			});
-
-			btnExcluir.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-
-					if (conPlacaValue.getText().isBlank()) {
-
-						JOptionPane.showMessageDialog(null, "Informe uma placa para busca", "Aviso",
-								JOptionPane.WARNING_MESSAGE);
-					} else {
-
-						if (resultadoVeiculoPasseio != null
-								|| resultadoVeiculoPasseio.getPlaca().equals(conPlacaValue.getText())) {
-
-							if (bdVeiculos.removerVeiculoPasseio(resultadoVeiculoPasseio)) {
-
-								JOptionPane.showMessageDialog(null, "Veiculo removido com sucesso", "Concluido",
-										JOptionPane.OK_OPTION);
-								janVeiPasseioProcurar.dispose();
-							} else {
-
-								JOptionPane.showMessageDialog(null, "Erro interno ao remover tente mais tarde", "Erro",
-										JOptionPane.ERROR_MESSAGE);
-								janVeiPasseioProcurar.dispose();
-							}
-						} else {
-
-							resultadoVeiculoPasseio = bdVeiculos.listarTodosVeiculosPasseio().stream()
-									.filter(i -> i.getPlaca().equals(conPlacaValue.getText())).findFirst().orElse(null);
-						}
-					}
-				}
-			});
-
-			janVeiPasseioProcurar.add(btnConsultar);
-			janVeiPasseioProcurar.add(btnExcluir);
-			janVeiPasseioProcurar.add(btnSair);
-
-			janVeiPasseioProcurar.setVisible(true);
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Informações informadas invalidas", "Erro", JOptionPane.ERROR_MESSAGE);
-			janVeiPasseioCadastrar.dispose();
-		}
-	}
-
-	public static void veiculoCargaProcurar() {
-
-		try {
-			janVeiCargaProcurar.setContentPane(new Container());
-			janVeiCargaProcurar.setDefaultCloseOperation(janVeiCargaProcurar.DISPOSE_ON_CLOSE);
-			janVeiCargaProcurar.setResizable(false);
-			janVeiCargaProcurar.setSize(larg, alt);
-			janVeiCargaProcurar.setLocationRelativeTo(null);
-			janVeiCargaProcurar.setLayout(new FlowLayout());
-
-			JButton btnConsultar = new JButton("Consultar");
-			JButton btnExcluir = new JButton("Excluir");
-			JButton btnSair = new JButton("Sair");
-
-			JLabel conPlacaLabel = new JLabel("Informe a placa para consulta: ");
-			JTextField conPlacaValue = new JTextField(10);
-			conPlacaValue.setText("");
-			janVeiCargaProcurar.add(conPlacaLabel);
-			janVeiCargaProcurar.add(conPlacaValue);
-
-			btnConsultar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-
-					if (!conPlacaValue.getText().isBlank()) {
-
-						resultadoVeiculoCarga = bdVeiculos.listarTodosVeiculosCarga().stream()
-								.filter(i -> i.getPlaca().equals(conPlacaValue.getText())).findFirst().orElse(null);
-
-						if (resultadoVeiculoCarga != null) {
-
-							String[][] data = { { resultadoVeiculoCarga.getPlaca(), resultadoVeiculoCarga.getMarca(),
-									resultadoVeiculoCarga.getModelo(), resultadoVeiculoCarga.getVelocMax().toString(),
-									resultadoVeiculoCarga.getCor(), resultadoVeiculoCarga.getQtdeRodas().toString(),
-									resultadoVeiculoCarga.getMotor().getQtdPist().toString(),
-									resultadoVeiculoCarga.getMotor().getPotencia().toString(),
-									resultadoVeiculoCarga.getTara().toString(),
-									resultadoVeiculoCarga.getCargaMax().toString() } };
-
-							String[] columnNames = { "Placa", "Marca", "Modelo", "Velocidade Maxima", "Cor",
-									"Qtde de Rodas", "Qtde de Pistao", "Potencia", "Tara", "Carga Maxima" };
-
-							JTable jTable = new JTable(data, columnNames);
-							JScrollPane sp = new JScrollPane(jTable);
-							janVeiCargaProcurar.add(sp);
-
-							janVeiCargaProcurar.revalidate();
-							janVeiCargaProcurar.repaint();
-							janVeiCargaProcurar.pack();
-						} else {
-
-							JOptionPane.showMessageDialog(null,
-									"Não a veiculo de passeios com placa" + conPlacaValue.getText(), "Aviso",
-									JOptionPane.WARNING_MESSAGE);
-						}
-					} else {
-
-						JOptionPane.showMessageDialog(null, "Informe uma placa para busca", "Aviso",
-								JOptionPane.WARNING_MESSAGE);
-					}
-				}
-			});
-
-			btnSair.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-
-					janVeiCargaProcurar.dispose();
-				}
-			});
-
-			btnExcluir.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-
-					if (conPlacaValue.getText().isBlank()) {
-
-						JOptionPane.showMessageDialog(null, "Informe uma placa para busca", "Aviso",
-								JOptionPane.WARNING_MESSAGE);
-					} else {
-
-						if (resultadoVeiculoCarga != null
-								|| resultadoVeiculoCarga.getPlaca().equals(conPlacaValue.getText())) {
-
-							if (bdVeiculos.removerVeiculoPasseio(resultadoVeiculoPasseio)) {
-
-								JOptionPane.showMessageDialog(null, "Veiculo removido com sucesso", "Concluido",
-										JOptionPane.OK_OPTION);
-								janVeiCargaProcurar.dispose();
-							} else {
-
-								JOptionPane.showMessageDialog(null, "Erro interno ao remover tente mais tarde", "Erro",
-										JOptionPane.ERROR_MESSAGE);
-								janVeiCargaProcurar.dispose();
-							}
-						} else {
-
-							JOptionPane.showMessageDialog(null, "Necessario consultar a placa ", "Aviso",
-									JOptionPane.WARNING_MESSAGE);
-						}
-					}
-				}
-			});
-
-			janVeiCargaProcurar.add(btnConsultar);
-			janVeiCargaProcurar.add(btnExcluir);
-			janVeiCargaProcurar.add(btnSair);
-
-			janVeiCargaProcurar.setVisible(true);
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Informações informadas invalidas", "Erro", JOptionPane.ERROR_MESSAGE);
-			janVeiCargaProcurar.dispose();
 		}
 	}
 

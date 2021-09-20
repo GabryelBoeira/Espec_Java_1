@@ -1,4 +1,4 @@
-package teste;
+package telas;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,28 +15,38 @@ import javax.swing.table.DefaultTableModel;
 import dal.BDVeiculos;
 import model.Passeio;
 
+/*
+ * Classname: JanelaExibirTodosVeiculosPasseio
+ *
+ * Version information: 1
+ *
+ * Date: 19/09/2021
+ *
+ * Created by: Gabryel J. Boeira
+ */
 public class JanelaExibirTodosVeiculosPasseio implements ActionListener {
 
 	private BDVeiculos bdVeiculos;
 	private static JFrame janVeiPasseioImprimir = new JFrame("Imprimir / Excluir Todos");
 
-	private static String[] columnNames = { "Placa", "Marca", "Modelo", "Velocidade Maxima", "Cor", "Qtde de Rodas",
+	private static String[] columnNamesVeiPasseio = { "Placa", "Marca", "Modelo", "Velocidade Maxima", "Cor", "Qtde de Rodas",
 			"Qtde de Pistao", "Potencia", "Qtde de Passageiros" };
 	private static int larg = 1000, alt = 450;
 
-	private DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+	private DefaultTableModel model = new DefaultTableModel(columnNamesVeiPasseio, 0);
 	private JTable passeioDados = new JTable(model);
 	private JScrollPane barraRolagem = new JScrollPane(passeioDados);
 
 	private JButton btnImprimirTodos = new JButton("Imprimir Todos");
 	private JButton btnExcluirTodos = new JButton("Excluir Todos");
 	private JButton btnSair = new JButton("Sair");
-	
+
 	public JanelaExibirTodosVeiculosPasseio(BDVeiculos bdVeiculos) {
+
+		this.inicializar();
 		this.bdVeiculos = bdVeiculos;
-		this.carregaJanela();
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent act) {
 
@@ -48,8 +58,9 @@ public class JanelaExibirTodosVeiculosPasseio implements ActionListener {
 
 			if (excluirTodosDados()) {
 
-				JOptionPane.showMessageDialog(null, "Veiculos removidos com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-				DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+				JOptionPane.showMessageDialog(null, "Veiculos removidos com sucesso", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+				DefaultTableModel model = new DefaultTableModel(columnNamesVeiPasseio, 0);
 				passeioDados.setModel(model);
 			}
 
@@ -58,8 +69,8 @@ public class JanelaExibirTodosVeiculosPasseio implements ActionListener {
 		}
 	}
 
-	public void carregaJanela() {
-		
+	public void inicializar() {
+
 		janVeiPasseioImprimir = new JFrame("Imprimir / Excluir Todos");
 		janVeiPasseioImprimir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		janVeiPasseioImprimir.setLayout(new GridLayout(4, 1));
@@ -75,7 +86,7 @@ public class JanelaExibirTodosVeiculosPasseio implements ActionListener {
 
 		btnSair.setMnemonic('S');
 		btnSair.addActionListener(this);
-
+		
 		janVeiPasseioImprimir.add(barraRolagem);
 		janVeiPasseioImprimir.add(btnImprimirTodos);
 		janVeiPasseioImprimir.add(btnExcluirTodos);
@@ -89,14 +100,15 @@ public class JanelaExibirTodosVeiculosPasseio implements ActionListener {
 		List<Passeio> passeioList = bdVeiculos.listarTodosVeiculosPasseio();
 
 		if (passeioList.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Não há veiculos de passeio cadastrados.", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Não há veiculos de passeio cadastrados.", "Erro",
+					JOptionPane.ERROR_MESSAGE);
 
 		} else {
-			model = new DefaultTableModel(columnNames, 0);
-		
+			model = new DefaultTableModel(columnNamesVeiPasseio, 0);
+
 			for (Passeio veiPasseio : passeioList) {
 
-				String[] data =  { veiPasseio.getPlaca(), veiPasseio.getMarca(), veiPasseio.getModelo(),
+				String[] data = { veiPasseio.getPlaca(), veiPasseio.getMarca(), veiPasseio.getModelo(),
 						veiPasseio.getVelocMax().toString(), veiPasseio.getCor(), veiPasseio.getQtdeRodas().toString(),
 						veiPasseio.getMotor().getQtdPist().toString(), veiPasseio.getMotor().getPotencia().toString(),
 						veiPasseio.getQtdePassageiro().toString() };

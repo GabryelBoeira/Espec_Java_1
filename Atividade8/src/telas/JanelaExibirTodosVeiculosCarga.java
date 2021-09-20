@@ -1,4 +1,4 @@
-package teste;
+package telas;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -16,13 +16,22 @@ import javax.swing.table.DefaultTableModel;
 import dal.BDVeiculos;
 import model.Carga;
 
+/*
+ * Classname: JanelaExibirTodosVeiculosCarga
+ *
+ * Version information: 1
+ *
+ * Date: 19/09/2021
+ *
+ * Created by: Gabryel J. Boeira
+ */
 public class JanelaExibirTodosVeiculosCarga implements ActionListener {
 
-	private static String[] columnNames = { "Placa", "Marca", "Modelo", "Velocidade Maxima", "Cor", "Qtde de Rodas",
+	private static String[] columnNamesVeiCarga = { "Placa", "Marca", "Modelo", "Velocidade Maxima", "Cor", "Qtde de Rodas",
 			"Qtde de Pistao", "Potencia", "Tara", "Carga Maxima" };
 	private static int larg = 1000, alt = 450;
 
-	private DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+	private DefaultTableModel model = new DefaultTableModel(columnNamesVeiCarga, 0);
 	private JTable cargaDados = new JTable(model);
 	private JScrollPane barraRolagem = new JScrollPane(cargaDados);
 
@@ -34,8 +43,9 @@ public class JanelaExibirTodosVeiculosCarga implements ActionListener {
 	private static JFrame janVeiCargaImprimir = new JFrame();
 
 	public JanelaExibirTodosVeiculosCarga(BDVeiculos bdVeiculos) {
+		
+		this.inicializar();
 		this.bdVeiculos = bdVeiculos;
-		this.carregaJanela();
 	}
 
 	@Override
@@ -51,7 +61,7 @@ public class JanelaExibirTodosVeiculosCarga implements ActionListener {
 
 				JOptionPane.showMessageDialog(null, "Veiculos removidos com sucesso", "Sucesso",
 						JOptionPane.INFORMATION_MESSAGE);
-				DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+				DefaultTableModel model = new DefaultTableModel(columnNamesVeiCarga, 0);
 				cargaDados.setModel(model);
 			}
 
@@ -60,7 +70,7 @@ public class JanelaExibirTodosVeiculosCarga implements ActionListener {
 		}
 	}
 
-	public void carregaJanela() {
+	public void inicializar() {
 		janVeiCargaImprimir = new JFrame("Imprimir / Excluir Todos");
 		janVeiCargaImprimir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		janVeiCargaImprimir.setLayout(new GridLayout(4, 1));
@@ -94,7 +104,7 @@ public class JanelaExibirTodosVeiculosCarga implements ActionListener {
 					JOptionPane.ERROR_MESSAGE);
 
 		} else {
-			model = new DefaultTableModel(columnNames, 0);
+			model = new DefaultTableModel(columnNamesVeiCarga, 0);
 
 			for (Carga veiCarga : cargaList) {
 
