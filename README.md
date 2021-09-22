@@ -19,4 +19,4 @@ Aulas iniciais de Java tanto para nivelamento como revisão de conteúdos
 
 * Prova: Prova realizada para a disciplina de JAVA I com o objetivo de avaliar a utilização dos conceitos aplicados na disciplina. Utilizando o console para realizar as interações solicitadas.
 
-**** Este é uma Disciplina Concluida ****
+**** Esta é uma Disciplina Concluida ****
