@@ -1,4 +1,6 @@
-<h1 align="center">Java I</h1>
+<h1 align="center"> Disciplina de Java I - Especialização em Tecnologia Java UTFPR </h1>
+
+
 Aulas iniciais de Java tanto para nivelamento como revisão de conteúdos
 
 ## Resumo
